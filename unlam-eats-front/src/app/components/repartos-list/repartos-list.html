@@ -1,0 +1,33 @@
+<div *ngIf="loading">Cargando repartos...</div>
+<div *ngIf="error" class="text-red-500">{{ error }}</div>
+
+<table *ngIf="!loading && !error" border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Pedido</th>
+      <th>Repartidor</th>
+      <th>Dirección</th>
+      <th>Estado</th>
+      <th>Fecha Asignación</th>
+      <th>Fecha Entrega</th>
+      <th>Observaciones</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of repartos">
+      <td>{{ r.id }}</td>
+      <td>{{ r.idPedido }}</td>
+      <td>{{ r.idRepartidor }}</td>
+      <td>{{ r.direccionEntrega }}</td>
+      <td>{{ r.estado }}</td>
+      <td>{{ r.fechaAsignacion | date:'short' }}</td>
+      <td>{{ r.fechaEntrega ? (r.fechaEntrega | date:'short') : '-' }}</td>
+      <td>{{ r.observaciones || '-' }}</td>
+      <td>
+        <button (click)="eliminarReparto(r.id)">Eliminar</button>
+        <button (click)="asignarRepartidor(r.id)">Asignar Repartidor</button>
+      </td>
+  </tbody>
+</table>
