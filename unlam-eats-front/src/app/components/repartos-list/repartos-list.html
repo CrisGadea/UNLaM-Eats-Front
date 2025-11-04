@@ -21,7 +21,21 @@
       <td>{{ r.idPedido }}</td>
       <td>{{ r.idRepartidor }}</td>
       <td>{{ r.direccionEntrega }}</td>
-      <td>{{ r.estado }}</td>
+      <td>
+        <select class="p-1 rounded"
+                [ngClass]="{
+                  'bg-yellow-100 text-yellow-800': r.estado === EstadoReparto.PENDIENTE,
+                  'bg-blue-100 text-blue-800': r.estado === EstadoReparto.EN_CAMINO,
+                  'bg-green-100 text-green-800': r.estado === EstadoReparto.ENTREGADO
+                }"
+                [ngModel]="getEstadoString(r.estado)"
+                (ngModelChange)="cambiarEstadoSelect(r, $event)"
+                [disabled]="r.estado === EstadoReparto.ENTREGADO">
+          <option value="PENDIENTE">Pendiente</option>
+          <option value="EN_CAMINO">En camino</option>
+          <option value="ENTREGADO">Entregado</option>
+        </select>
+      </td>
       <td>{{ r.fechaAsignacion | date:'short' }}</td>
       <td>{{ r.fechaEntrega ? (r.fechaEntrega | date:'short') : '-' }}</td>
       <td>{{ r.observaciones || '-' }}</td>

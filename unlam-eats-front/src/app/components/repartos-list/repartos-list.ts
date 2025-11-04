@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { RepartosService, Reparto } from '../../services/repartos.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+export enum EstadoReparto {
+  PENDIENTE = 0,
+  EN_CAMINO = 1,
+  ENTREGADO = 3
+}
 
 @Component({
   selector: 'app-repartos-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, FormsModule ,HttpClientModule],
   templateUrl: './repartos-list.html',
   styleUrls: ['./repartos-list.css'],
 })
@@ -14,6 +21,8 @@ export class RepartosList implements OnInit {
   repartos: Reparto[] = [];
   loading = false;
   error = '';
+  EstadoReparto = EstadoReparto;
+
 
   constructor(private repartosService: RepartosService) { }
 
@@ -62,4 +71,32 @@ export class RepartosList implements OnInit {
     })
   }
 
+ cambiarEstadoSelect(reparto: Reparto, nuevoEstadoString: string): void {
+    if (!nuevoEstadoString) return;
+
+    // Evitar actualizar si es el mismo estado
+    if (nuevoEstadoString === this.getEstadoString(reparto.estado)) return;
+
+    this.repartosService.cambiarEstado(reparto.id, nuevoEstadoString).subscribe({
+      next: (repartoActualizado) => {
+        reparto.estado = repartoActualizado.estado;
+        reparto.fechaEntrega = repartoActualizado.fechaEntrega;
+        alert(`Estado actualizado a ${this.getEstadoString(repartoActualizado.estado)}`);
+      },
+      error: (err) => {
+        console.error('Error al cambiar el estado', err);
+        alert('Error al cambiar el estado');
+      }
+    });
+  }
+
+
+ getEstadoString(estado: EstadoReparto): string {
+    switch (estado) {
+      case EstadoReparto.PENDIENTE: return 'PENDIENTE';
+      case EstadoReparto.EN_CAMINO: return 'EN_CAMINO';
+      case EstadoReparto.ENTREGADO: return 'ENTREGADO';
+      default: return '';
+    }
+  }
 }

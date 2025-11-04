@@ -1,0 +1,23 @@
+<h2> + Crear un nuevo reparto </h2>
+<form (ngSubmit)="crearReparto()" #f="ngForm">
+<!-- Aca en realidad se tendria que recibir el id de pedido de PedidosApi, simulo que ingresamos uno-->
+  <label>ID Pedido:</label>
+  <input type="number" [(ngModel)]="nuevoReparto.idPedido" name="idPedido" required />
+<!-- Aca en realidad se tendria que recibir la direccion de UsuariosApi, simulo que ingresamos uno-->
+  <label>Dirección de Entrega:</label>
+  <input type="text" [(ngModel)]="nuevoReparto.direccionEntrega" name="direccionEntrega" required />
+
+
+  <label>Estado:</label>
+  <select [(ngModel)]="nuevoReparto.estado" name="estado">
+    <option [ngValue]="EstadoReparto.PENDIENTE">Pendiente</option>
+    <option [ngValue]="EstadoReparto.EN_CAMINO">En camino</option>
+    <option [ngValue]="EstadoReparto.ENTREGADO">Entregado</option>
+  </select>
+
+  <label>Observaciones:</label>
+  <input type="text" [(ngModel)]="nuevoReparto.observaciones" name="observaciones" />
+
+  <button type="submit">Crear Reparto</button>
+
+</form>

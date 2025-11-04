@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { EstadoReparto } from '../components/repartos-list/repartos-list';
 
 
 export interface Reparto  {
@@ -8,7 +9,7 @@ export interface Reparto  {
   idPedido: number;
   idRepartidor: number;
   direccionEntrega: string;
-  estado:string;
+  estado:EstadoReparto;
   fechaAsignacion:string;
   fechaEntrega?:string | null;
   observaciones?:string | null;
@@ -47,4 +48,12 @@ export class RepartosService {
  asignarRepartidor(idReparto: number, idRepartidor: number): Observable<Reparto> {
     return this.http.post<Reparto>(`${this.baseUrl}/asignar`, { idReparto, idRepartidor });
   }
+
+ cambiarEstado(id: number, nuevoEstado: string): Observable<Reparto> {
+  return this.http.put<Reparto>(
+    `${this.baseUrl}/${id}/estado`,
+    { NuevoEstado: nuevoEstado }, // coincide con tu DTO en C#
+    { headers: { 'Content-Type': 'application/json' } }
+  );
+}
 }
