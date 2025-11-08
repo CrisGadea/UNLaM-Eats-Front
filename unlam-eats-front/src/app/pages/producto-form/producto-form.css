@@ -1,0 +1,46 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.form-card {
+  width: 100%;
+  max-width: 600px;
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: var(--space-6);
+}
+
+.form-group {
+  margin-bottom: var(--space-4);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+}
+
+.text-danger {
+  color: var(--color-danger);
+  font-size: 0.9em;
+  margin-top: var(--space-1);
+}

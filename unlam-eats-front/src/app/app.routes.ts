@@ -30,6 +30,24 @@ export const routes: Routes = [
     canActivate: [authGuard, deliveryGuard],
     loadComponent: () => import('./features/delivery/dashboard/dashboard').then(m => m.Dashboard)
   },
-  { path: '**', redirectTo: '' }
+  {
+    path: 'productos',
+    loadComponent: () => import('./pages/producto-list/producto-list')
+                            .then(m => m.ProductoListComponent)
+  },
+  { 
+    path: 'productos/nuevo', 
+    loadComponent: () => import('./pages/producto-form/producto-form') 
+                            .then(m => m.ProductoForm) 
+  },
+  { 
+    path: 'productos/editar/:id', 
+    loadComponent: () => import('./pages/producto-form/producto-form')
+                            .then(m => m.ProductoForm) 
+  },
+  { 
+    path: '**', 
+    redirectTo: '', 
+    pathMatch: 'full' 
+  }
 ];
-
