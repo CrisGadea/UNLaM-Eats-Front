@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { AuthService, RegisterPayload } from '../../../core/services/auth';
@@ -8,7 +9,7 @@ import { AuthStore } from '../../../core/state/auth-store.service';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [NgIf, RouterLink, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
 })
