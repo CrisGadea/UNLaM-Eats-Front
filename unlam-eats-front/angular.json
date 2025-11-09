@@ -10,7 +10,7 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
-        "build": {
+        "build": {  
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
@@ -88,5 +88,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "4de907d0-5a1b-42aa-97af-482491ee221d"
   }
 }

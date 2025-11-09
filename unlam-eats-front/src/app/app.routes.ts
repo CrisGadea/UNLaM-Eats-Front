@@ -28,6 +28,21 @@ export const routes: Routes = [
     loadComponent: () => import('./features/delivery/dashboard/dashboard').then(m => m.Dashboard)
   },
   {
+    path: 'productos',
+    loadComponent: () => import('./pages/producto-list/producto-list')
+                            .then(m => m.ProductoListComponent)
+  },
+  { 
+    path: 'productos/nuevo', 
+    loadComponent: () => import('./pages/producto-form/producto-form') 
+                            .then(m => m.ProductoForm) 
+  },
+  { 
+    path: 'productos/editar/:id', 
+    loadComponent: () => import('./pages/producto-form/producto-form')
+                            .then(m => m.ProductoForm) 
+  },
+  {
     path: 'restaurantes/:id',
     loadComponent: () => import('./features/restaurantes/detail/detail').then(m => m.RestauranteDetailComponent)
   },
@@ -45,4 +60,3 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: '' }
 ];
-
