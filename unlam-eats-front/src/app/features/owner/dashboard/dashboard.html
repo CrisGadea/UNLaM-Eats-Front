@@ -1,1 +1,29 @@
-<p>dashboard works!</p>
+<section class="container stack-lg">
+  <h1 style="margin:0">Panel del dueño</h1>
+
+  <a routerLink="/role" class="btn btn-outline">Cambiar rol (demo)</a>
+
+  <div class="card" style="padding:12px;">
+    <strong>Pedidos</strong>
+    <div *ngIf="loading" class="text-muted">Cargando...</div>
+    <div *ngIf="!loading && error" class="text-danger">{{ error }}</div>
+    <div *ngIf="!loading && !error">
+      <article class="card" *ngFor="let o of orders" style="padding:12px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
+        <div class="stack">
+          <strong>#{{ o.id }} - Estado: {{ o.status }}</strong>
+          <small class="text-muted">Total: {{ o.total | currency:'ARS':'symbol':'1.0-0' }}</small>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn btn-outline" (click)="accept(o)" [disabled]="o.status>2">Aceptar</button>
+          <label class="stack" *ngIf="couriers.length > 0" style="margin:0;">
+            <small class="text-muted">Repartidor</small>
+            <select [(ngModel)]="selected[o.id]">
+              <option *ngFor="let c of couriers" [ngValue]="c.id">{{ c.name }} ({{ c.id }})</option>
+            </select>
+          </label>
+          <button class="btn btn-primary" (click)="assign(o)" [disabled]="o.status!==2">Asignar</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

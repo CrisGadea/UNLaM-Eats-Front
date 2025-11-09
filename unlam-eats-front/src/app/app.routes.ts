@@ -17,17 +17,14 @@ export const routes: Routes = [
   },
   {
     path: 'client',
-    canActivate: [authGuard, clientGuard],
     loadComponent: () => import('./features/client/dashboard/dashboard').then(m => m.Dashboard)
   },
   {
     path: 'owner',
-    canActivate: [authGuard, ownerGuard],
     loadComponent: () => import('./features/owner/dashboard/dashboard').then(m => m.Dashboard)
   },
   {
     path: 'delivery',
-    canActivate: [authGuard, deliveryGuard],
     loadComponent: () => import('./features/delivery/dashboard/dashboard').then(m => m.Dashboard)
   },
   {
@@ -52,6 +49,14 @@ export const routes: Routes = [
   {
     path: 'checkout',
     loadComponent: () => import('./features/checkout/checkout').then(m => m.CheckoutComponent)
+  },
+  {
+    path: 'tracking/:id',
+    loadComponent: () => import('./features/tracking/tracking').then(m => m.TrackingComponent)
+  },
+  {
+    path: 'role',
+    loadComponent: () => import('./features/role/role').then(m => m.RoleComponent)
   },
   { path: '**', redirectTo: '' }
 ];

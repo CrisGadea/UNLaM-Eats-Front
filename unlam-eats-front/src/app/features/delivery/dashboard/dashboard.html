@@ -1,1 +1,22 @@
-<p>dashboard works!</p>
+<section class="container stack-lg">
+  <h1 style="margin:0">Panel del repartidor</h1>
+  <a routerLink="/role" class="btn btn-outline">Cambiar rol (demo)</a>
+
+  <div class="card" style="padding:12px;">
+    <strong>Pedidos asignados</strong>
+    <div *ngIf="loading" class="text-muted">Cargando...</div>
+    <div *ngIf="!loading && error" class="text-danger">{{ error }}</div>
+    <div *ngIf="!loading && !error">
+      <article class="card" *ngFor="let o of orders" style="padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+        <div class="stack">
+          <strong>#{{ o.id }} - Estado: {{ o.status }}</strong>
+          <small class="text-muted">Total: {{ o.total | currency:'ARS':'symbol':'1.0-0' }}</small>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-outline" (click)="start(o)" [disabled]="o.status!==3">En camino</button>
+          <button class="btn btn-primary" (click)="deliver(o)" [disabled]="o.status!==4">Entregado</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

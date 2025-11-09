@@ -1,0 +1,38 @@
+<section class="container stack-lg">
+  <h1 style="margin:0">Seleccionar rol (demo)</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="stack">
+    <label class="stack">
+      <span>Rol</span>
+      <select formControlName="role">
+        <option value="cliente">Cliente</option>
+        <option value="dueno">Dueño</option>
+        <option value="repartidor">Repartidor</option>
+      </select>
+    </label>
+
+    <label class="stack">
+      <span>Nombre</span>
+      <input formControlName="name" placeholder="Nombre visible" />
+    </label>
+
+    <label class="stack">
+      <span>ID de usuario</span>
+      <input formControlName="id" placeholder="cliente-1 / dueno-1 / courier-1" />
+      <small class="text-muted">Sugerencias: cliente-1, dueno-1, courier-1</small>
+    </label>
+
+    <label class="stack">
+      <span>Email</span>
+      <input formControlName="email" type="email" />
+    </label>
+
+    <label class="stack" *ngIf="form.value.role === 'dueno'">
+      <span>Restaurant Id</span>
+      <input formControlName="restaurantId" type="number" min="1" />
+      <small class="text-muted">Para la demo usar 1 (restaurante precargado)</small>
+    </label>
+
+    <button class="btn btn-primary" type="submit">Guardar y navegar</button>
+  </form>
+</section>

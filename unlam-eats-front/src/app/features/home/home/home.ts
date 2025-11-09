@@ -5,9 +5,10 @@ import { RestaurantesService, Restaurant } from '../../../core/services/restaura
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [RouterLink, NgFor, NgIf],
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrls: ['./home.css'],
 })
 export class HomeComponent {
   restaurants: Restaurant[] = [];

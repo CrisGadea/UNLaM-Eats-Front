@@ -55,6 +55,9 @@ export class CheckoutComponent {
         this.successId = res?.id ?? null;
         this.cart.clear();
         this.placing = false;
+        if (this.successId) {
+          this.router.navigate(['/tracking', this.successId]);
+        }
       },
       error: () => {
         this.error = 'No se pudo crear el pedido';

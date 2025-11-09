@@ -9,7 +9,7 @@ import { CartService } from '../../../core/services/cart.service';
   standalone: true,
   imports: [RouterLink, NgIf, NgFor, CurrencyPipe],
   templateUrl: './detail.html',
-  styleUrl: './detail.css'
+  styleUrls: ['./detail.css']
 })
 export class RestauranteDetailComponent {
   private readonly route = inject(ActivatedRoute);

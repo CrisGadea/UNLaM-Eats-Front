@@ -6,6 +6,8 @@ export interface AuthUser {
   id: string;
   email: string;
   role: UserRole;
+  name?: string;
+  restaurantId?: number; // sólo para dueños
 }
 
 @Injectable({ providedIn: 'root' })
