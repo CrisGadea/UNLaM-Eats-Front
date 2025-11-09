@@ -1,9 +1,72 @@
-/* src/app/app.css */
-.main-nav {
-    display: flex;
-    gap: var(--space-4); /* Usa el espaciado global */
-    padding: var(--space-4);
-    border-bottom: 1px solid var(--color-border); /* Usa el borde global */
-    margin-bottom: var(--space-6);
-    align-items: center;
+:host {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+}
+
+.navbar {
+  background-color: #ffffff;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e7eb;
+
+}
+
+.navbar h1 {
+  color: #F97316;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main.container {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.content-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 2rem;
+  overflow: hidden;
+}
+
+
+
+::ng-deep .btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+::ng-deep .btn-primary {
+  background-color: #F97316;
+  color: white;
+}
+
+::ng-deep .btn-primary:hover {
+  background-color: #EA580C;
+}
+
+::ng-deep .btn-primary:disabled {
+  background-color: #FDBA74;
+  cursor: not-allowed;
+}
+
+::ng-deep .btn-primary i {
+  margin-right: 0.5rem;
 }

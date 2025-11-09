@@ -1,10 +1,13 @@
-<nav class="main-nav">
-  <a routerLink="/" class="btn btn-primary">Home</a>
-  <a routerLink="/productos" class="btn btn-outline">Lista de Productos</a>
+<nav class="navbar">
+  <div class="container">
+    <h1>UNLAM Eats</h1>
+  </div>
 </nav>
 
-<div class="container main-content-padding">
-    
-    <router-outlet /> 
+<main class="container">
+  <section class="content-card">
+    <app-repartos-list></app-repartos-list>
+  </section>
+</main>
 
-</div>
+<router-outlet></router-outlet>

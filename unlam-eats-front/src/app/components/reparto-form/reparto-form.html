@@ -1,0 +1,25 @@
+<h2 class="form-title">Crear un nuevo reparto</h2>
+
+<form (ngSubmit)="crearReparto()" #f="ngForm" class="reparto-form">
+
+  <label for="idPedido">ID Pedido:</label>
+  <input id="idPedido" type="number" [(ngModel)]="nuevoReparto.idPedido" name="idPedido" required />
+
+  <label for="direccionEntrega">Dirección de Entrega:</label>
+  <input id="direccionEntrega" type="text" [(ngModel)]="nuevoReparto.direccionEntrega" name="direccionEntrega" required />
+
+  <label for="estado">Estado:</label>
+  <select id="estado" [(ngModel)]="nuevoReparto.estado" name="estado">
+    <option [ngValue]="EstadoReparto.PENDIENTE">Pendiente</option>
+    <option [ngValue]="EstadoReparto.ASIGNADO">Asignado</option>
+    <option [ngValue]="EstadoReparto.ENTREGADO">Entregado</option>
+  </select>
+
+  <label for="observaciones">Observaciones:</label>
+  <input id="observaciones" type="text" [(ngModel)]="nuevoReparto.observaciones" name="observaciones" />
+
+  <button type="submit" class="btn btn-primary" [disabled]="f.invalid">
+    Crear Reparto
+  </button>
+
+</form>

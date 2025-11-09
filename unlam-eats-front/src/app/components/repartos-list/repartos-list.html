@@ -1,0 +1,63 @@
+<div *ngIf="loading">Cargando repartos...</div>
+<div *ngIf="error" class="text-red-500">{{ error }}</div>
+
+<div class="card-header">
+  <h2><i class="fa-solid fa-clipboard-list"></i> Lista de Repartos</h2>
+  <button class="btn btn-primary" (click)="abrirModal()">
+    <i class="fa-solid fa-plus"></i> Crear nuevo reparto
+  </button>
+</div>
+
+<table class="deliveries-table" *ngIf="!loading && !error">
+  <thead>
+    <tr>
+      <th>Pedido</th>
+      <th>Repartidor</th>
+      <th>Dirección</th>
+      <th>Estado</th>
+      <th>Fecha Asignación</th>
+      <th>Fecha Entrega</th>
+      <th>Observaciones</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of repartos">
+      <td>{{ r.idPedido }}</td>
+      <td>{{ r.idRepartidor || '-' }}</td> <td>{{ r.direccionEntrega }}</td>
+      <td>
+        <select class="status-pill"
+                [ngClass]="{
+                  'status-pendiente': r.estado === EstadoReparto.PENDIENTE,
+                  'status-asignado': r.estado === EstadoReparto.ASIGNADO,
+                  'status-entregado': r.estado === EstadoReparto.ENTREGADO
+                }"
+                [ngModel]="getEstadoString(r.estado)"
+                (ngModelChange)="cambiarEstadoSelect(r, $event)"
+                [disabled]="r.estado === EstadoReparto.ENTREGADO">
+          <option value="PENDIENTE">Pendiente</option>
+          <option value="ASIGNADO">Asignado</option>
+          <option value="ENTREGADO">Entregado</option>
+        </select>
+      </td>
+      <td>{{ r.fechaAsignacion | formatFecha }}</td>
+      <td>{{ r.fechaEntrega | formatFecha }}</td>
+      <td>{{ r.observaciones || '-' }}</td>
+      <td>
+        <button class="btn-icon btn-delete" (click)="eliminarReparto(r.id)" title="Eliminar">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+        <button class="btn-icon btn-assign" (click)="asignarRepartidor(r.id)" [disabled]="r.estado === EstadoReparto.ENTREGADO" title="Asignar Repartidor">
+          <i class="fa-solid fa-user-plus"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="modal" [class.show]="mostrarModal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <app-reparto-form (repartoCreado)="onRepartoCreado($event)"></app-reparto-form>
+  </div>
+</div>
