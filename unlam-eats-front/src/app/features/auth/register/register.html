@@ -1,0 +1,60 @@
+<div class="container" style="min-height: 100dvh;">
+  <div class="center" style="min-height: 100dvh;">
+    <div class="card" style="width: 100%; max-width: 480px;">
+      <div class="stack" style="gap: var(--space-4);">
+        <div class="stack">
+          <h1 style="margin:0; font-size: 22px;">Crear cuenta</h1>
+          <p class="text-muted" style="margin:0;">Empezá a pedir en minutos</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="stack">
+          <div *ngIf="error" class="card" style="background:#fff4f4;border-color:#fecaca;color:#991b1b;">
+            <small>{{ error }}</small>
+          </div>
+          <div class="stack">
+            <label for="name"><small>Nombre</small></label>
+            <input id="name" class="input" type="text" formControlName="name" placeholder="Tu nombre" />
+          </div>
+
+          <div class="stack">
+            <label for="email"><small>Email</small></label>
+            <input id="email" class="input" type="email" formControlName="email" placeholder="tu@correo.com" />
+          </div>
+
+          <div class="stack">
+            <label for="phone"><small>Teléfono</small></label>
+            <input id="phone" class="input" type="tel" formControlName="phone" placeholder="+54 11 1234-5678" />
+          </div>
+
+          <div class="stack">
+            <label for="role"><small>Rol</small></label>
+            <select id="role" class="input" formControlName="role">
+              <option value="cliente">Cliente</option>
+              <option value="dueno">Dueño</option>
+              <option value="repartidor">Repartidor</option>
+            </select>
+          </div>
+
+          <div class="stack">
+            <label for="password"><small>Contraseña</small></label>
+            <input id="password" class="input" type="password" formControlName="password" placeholder="••••••••" />
+          </div>
+
+          <div class="stack">
+            <label for="confirm"><small>Confirmar contraseña</small></label>
+            <input id="confirm" class="input" type="password" formControlName="confirm" placeholder="••••••••" />
+          </div>
+
+          <button class="btn btn-primary btn-block" type="submit" [disabled]="form.invalid || loading">
+            {{ loading ? 'Creando...' : 'Crear cuenta' }}
+          </button>
+        </form>
+
+        <div class="stack" style="gap: 4px;">
+          <small class="text-muted">¿Ya tenés cuenta?</small>
+          <a routerLink="/login">Ingresar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

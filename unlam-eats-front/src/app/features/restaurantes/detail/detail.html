@@ -1,0 +1,30 @@
+<section class="container stack-lg" *ngIf="!loading && !error; else stateTpl">
+  <a routerLink="/" class="btn btn-outline">← Volver</a>
+
+  <div class="stack">
+    <h1 style="margin:0">{{ restaurant?.name }}</h1>
+    <small class="text-muted">{{ restaurant?.address }}</small>
+  </div>
+
+  <div class="home-grid">
+    <article class="card stack" *ngFor="let m of menu">
+      <div class="home-thumb"></div>
+      <div class="stack" style="gap:4px;">
+        <strong>{{ m.name }}</strong>
+        <small class="text-muted">{{ m.description }}</small>
+        <small>{{ m.price | currency:'ARS':'symbol':'1.0-0' }}</small>
+      </div>
+      <button class="btn btn-primary" (click)="addToCart(m)">Agregar</button>
+    </article>
+  </div>
+
+  <div class="card" style="padding:12px; display:flex; gap:8px; align-items:center;">
+    <a routerLink="/checkout" class="btn btn-success">Ir al checkout</a>
+    <span class="text-muted">Productos agregados: {{ cart.count() }} • Total: {{ cart.total() | currency:'ARS':'symbol':'1.0-0' }}</span>
+  </div>
+</section>
+
+<ng-template #stateTpl>
+  <div class="container" *ngIf="loading">Cargando...</div>
+  <div class="container text-danger" *ngIf="!loading && error">{{ error }}</div>
+</ng-template>

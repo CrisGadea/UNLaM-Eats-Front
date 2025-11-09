@@ -1,0 +1,51 @@
+<header class="container" style="padding: var(--space-4) 0;">
+  <div class="stack" style="gap: var(--space-2);">
+    <h1 style="margin:0; font-size: 24px;">UNLaM Eats</h1>
+    <p class="text-muted" style="margin:0;">Pedí comida de tus restaurantes favoritos</p>
+  </div>
+  <nav style="margin-top: var(--space-3); display:flex; gap: 12px;">
+    <a routerLink="/login" class="btn btn-outline">Ingresar</a>
+    <a routerLink="/register" class="btn btn-primary">Crear cuenta</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="card stack">
+    <input class="input" type="search" placeholder="Buscar restaurantes o platos..." />
+    <div class="stack" style="gap: var(--space-2);">
+      <small class="text-muted">Categorías populares</small>
+      <div style="display:flex; gap:8px; overflow:auto;">
+        <button class="btn btn-outline">Pizza</button>
+        <button class="btn btn-outline">Sushi</button>
+        <button class="btn btn-outline">Hamburguesas</button>
+        <button class="btn btn-outline">Veggie</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="container stack-lg">
+  <div class="stack">
+    <h2 style="margin:0; font-size: 18px;">Cerca de vos</h2>
+
+    <div *ngIf="loading" class="text-muted">Cargando restaurantes...</div>
+    <div *ngIf="!loading && error" class="text-danger">{{ error }}</div>
+
+    <div *ngIf="!loading && !error" class="home-grid">
+      <article class="card stack" *ngFor="let r of restaurants">
+        <div class="home-thumb"></div>
+        <div class="stack" style="gap:4px;">
+          <strong>{{ r.name }}</strong>
+          <small class="text-muted">{{ r.address }}</small>
+        </div>
+        <a [routerLink]="['/restaurantes', r.id]" class="btn btn-primary">Iniciar pedido</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="container" style="padding: var(--space-6) 0;">
+  <div style="display:flex; gap:12px;">
+    <a routerLink="/login">Ingresar</a>
+    <a routerLink="/register">Crear cuenta</a>
+  </div>
+  
+</footer>

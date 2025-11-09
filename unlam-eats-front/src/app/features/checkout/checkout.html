@@ -1,0 +1,29 @@
+<section class="container stack-lg">
+  <a routerLink="/" class="btn btn-outline">← Seguir comprando</a>
+
+  <h1 style="margin:0">Checkout</h1>
+
+  <div *ngIf="cart.items().length === 0" class="text-muted">Tu carrito está vacío.</div>
+
+  <div *ngIf="cart.items().length > 0" class="stack">
+    <article class="card" *ngFor="let i of cart.items()" style="padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+      <div class="stack" style="gap:4px;">
+        <strong>{{ i.name }}</strong>
+        <small class="text-muted">x{{ i.quantity }} • {{ i.price | currency:'ARS':'symbol':'1.0-0' }}</small>
+      </div>
+      <button class="btn btn-outline" (click)="remove(i.menuItemId)">Quitar</button>
+    </article>
+
+    <div class="card" style="padding:12px; display:flex; justify-content:space-between; align-items:center;">
+      <strong>Total</strong>
+      <strong>{{ cart.total() | currency:'ARS':'symbol':'1.0-0' }}</strong>
+    </div>
+
+    <div *ngIf="error" class="text-danger">{{ error }}</div>
+    <div *ngIf="successId" class="text-success">Pedido creado #{{ successId }}</div>
+
+    <button class="btn btn-primary" [disabled]="placing" (click)="placeOrder()">
+      {{ placing ? 'Procesando...' : 'Confirmar pedido' }}
+    </button>
+  </div>
+</section>

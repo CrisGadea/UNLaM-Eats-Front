@@ -1,0 +1,19 @@
+/* Home specific helpers */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.home-thumb {
+  aspect-ratio: 16/9;
+  background: #ddd;
+  border-radius: 8px;
+}
+
+@media (min-width: 640px) {
+  .home-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
