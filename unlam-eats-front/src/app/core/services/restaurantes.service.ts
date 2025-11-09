@@ -16,7 +16,7 @@ export class RestaurantesService {
   private readonly base = `${environment.apiBaseUrl}/restaurantes`;
 
   getAll() {
-    return this.http.get<Restaurant[]>(`${this.base}/`);
+    return this.http.get<Restaurant[]>(`${this.base}`);
   }
 
   getById(id: number) {

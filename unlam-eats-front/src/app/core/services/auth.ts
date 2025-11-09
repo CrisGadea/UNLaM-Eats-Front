@@ -14,10 +14,24 @@ export class AuthService {
   }
 
   login(payload: { email: string; password: string }) {
-    return this.http.post<{ token: string; user: { id: string; email: string; role: 'cliente'|'dueno'|'repartidor' } }>(`${this.baseUrl}/auth/login`, payload);
+    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, payload);
   }
 
-  register(payload: any) {
+  register(payload: RegisterPayload) {
     return this.http.post<{ id: string; email: string; role: 'cliente'|'dueno'|'repartidor' }>(`${this.baseUrl}/auth/register`, payload);
   }
 }
+
+export interface LoginResponse {
+  token: string;
+  user: { id: string; email: string; role: 'cliente'|'dueno'|'repartidor' };
+}
+
+export type RegisterPayload = {
+  name: string;
+  email: string;
+  phone: string;
+  role: 'cliente' | 'dueno' | 'repartidor';
+  password: string;
+  confirm: string;
+};

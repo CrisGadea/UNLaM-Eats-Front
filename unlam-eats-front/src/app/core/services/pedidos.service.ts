@@ -23,4 +23,38 @@ export class PedidosService {
   createFromCart(dto: CreateOrderDto) {
     return this.http.post(`${this.base}/from-cart`, dto);
   }
+
+  getById(id: number) {
+    return this.http.get<any>(`${this.base}/${id}`);
+  }
+
+  list(params?: { customerId?: string; restaurantId?: number }) {
+    return this.http.get<any[]>(`${this.base}/`, { params: params as any });
+  }
+
+  accept(id: number) {
+    return this.http.put(`${this.base}/${id}/accept`, {});
+  }
+
+  assignCourier(id: number, courierId: string) {
+    return this.http.put(`${this.base}/${id}/assign-courier`, { courierId });
+  }
+
+  startDelivery(id: number) {
+    return this.http.put(`${this.base}/${id}/start-delivery`, {});
+  }
+
+  deliver(id: number) {
+    return this.http.put(`${this.base}/${id}/deliver`, {});
+  }
+
+  getCouriers() {
+    const root = environment.apiBaseUrl.replace(/\/api$/, '');
+    return this.http.get<Array<{ id: string; name: string }>>(`${root}/api/repartidores`);
+  }
+
+  addCourier(courier: { id: string; name: string }) {
+    const root = environment.apiBaseUrl.replace(/\/api$/, '');
+    return this.http.post(`${root}/api/repartidores`, courier);
+  }
 }

@@ -1,0 +1,22 @@
+<section class="container stack-lg">
+  <h1 style="margin:0">Seguimiento de pedido</h1>
+
+  <div *ngIf="error" class="text-danger">{{ error }}</div>
+  <div *ngIf="!error && !order" class="text-muted">Cargando pedido...</div>
+
+  <div *ngIf="order" class="stack">
+    <div class="card" style="padding:12px;">
+      <div><strong>Pedido #{{ order.id }}</strong></div>
+      <div>Estado: {{ order.status }}</div>
+      <div>Total: {{ order.total | currency:'ARS':'symbol':'1.0-0' }}</div>
+      <div *ngIf="order.assignedCourierId">Repartidor asignado: {{ order.assignedCourierId }}</div>
+    </div>
+
+    <div class="card" style="padding:12px;">
+      <strong>Items</strong>
+      <ul>
+        <li *ngFor="let it of order.items">{{ it.nameSnapshot }} x{{ it.quantity }} - {{ it.priceSnapshot | currency:'ARS':'symbol':'1.0-0' }}</li>
+      </ul>
+    </div>
+  </div>
+</section>
