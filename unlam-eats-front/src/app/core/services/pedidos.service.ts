@@ -48,6 +48,10 @@ export class PedidosService {
     return this.http.put(`${this.base}/${id}/deliver`, {});
   }
 
+  reject(id: number, reason: string) {
+    return this.http.put(`${this.base}/${id}/reject`, {}, { params: { reason } });
+  }
+
   getCouriers() {
     const root = environment.apiBaseUrl.replace(/\/api$/, '');
     return this.http.get<Array<{ id: string; name: string }>>(`${root}/api/repartidores`);

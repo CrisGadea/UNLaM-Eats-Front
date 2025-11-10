@@ -9,8 +9,9 @@
     <div *ngIf="!loading && !error">
       <article class="card" *ngFor="let o of orders" style="padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
         <div class="stack">
-          <strong>#{{ o.id }} - Estado: {{ o.status }}</strong>
+          <strong>#{{ o.id }} - Estado: {{ statusText(o.status) }}</strong>
           <small class="text-muted">Total: {{ o.total | currency:'ARS':'symbol':'1.0-0' }}</small>
+          <small *ngIf="o.status===6 && o.rejectionReason" class="text-danger">Motivo: {{ o.rejectionReason }}</small>
         </div>
         <div style="display:flex; gap:8px;">
           <button class="btn btn-outline" (click)="start(o)" [disabled]="o.status!==3">En camino</button>

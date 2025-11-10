@@ -1,7 +1,11 @@
 <section class="container stack-lg">
   <h1 style="margin:0">Panel del dueño</h1>
 
-  <a routerLink="/role" class="btn btn-outline">Cambiar rol (demo)</a>
+  <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+    <button class="btn btn-outline" (click)="goBack()">Volver</button>
+    <button class="btn" (click)="goHome()">Home</button>
+    <a routerLink="/role" class="btn btn-outline">Cambiar rol (demo)</a>
+  </div>
 
   <div class="card" style="padding:12px;">
     <strong>Pedidos</strong>
@@ -10,8 +14,9 @@
     <div *ngIf="!loading && !error">
       <article class="card" *ngFor="let o of orders" style="padding:12px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
         <div class="stack">
-          <strong>#{{ o.id }} - Estado: {{ o.status }}</strong>
+          <strong>#{{ o.id }} - Estado: {{ statusText(o.status) }}</strong>
           <small class="text-muted">Total: {{ o.total | currency:'ARS':'symbol':'1.0-0' }}</small>
+          <small *ngIf="o.status===6 && o.rejectionReason" class="text-danger">Motivo: {{ o.rejectionReason }}</small>
         </div>
         <div style="display:flex; gap:8px; align-items:center;">
           <button class="btn btn-outline" (click)="accept(o)" [disabled]="o.status>2">Aceptar</button>
@@ -22,6 +27,8 @@
             </select>
           </label>
           <button class="btn btn-primary" (click)="assign(o)" [disabled]="o.status!==2">Asignar</button>
+          <input type="text" placeholder="Motivo rechazo" [(ngModel)]="rejectNotes[o.id]" style="min-width:220px;" />
+          <button class="btn btn-outline" (click)="reject(o)" [disabled]="!(o.status===0 || o.status===2 || o.status===1)">Rechazar</button>
         </div>
       </article>
     </div>

@@ -7,9 +7,10 @@
   <div *ngIf="order" class="stack">
     <div class="card" style="padding:12px;">
       <div><strong>Pedido #{{ order.id }}</strong></div>
-      <div>Estado: {{ order.status }}</div>
+      <div>Estado: {{ statusText(order.status) }}</div>
       <div>Total: {{ order.total | currency:'ARS':'symbol':'1.0-0' }}</div>
       <div *ngIf="order.assignedCourierId">Repartidor asignado: {{ order.assignedCourierId }}</div>
+      <div *ngIf="order.status===6 && order.rejectionReason" class="text-danger">Motivo rechazo: {{ order.rejectionReason }}</div>
     </div>
 
     <div class="card" style="padding:12px;">
