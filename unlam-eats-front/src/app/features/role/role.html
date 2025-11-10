@@ -28,11 +28,14 @@
     </label>
 
     <label class="stack" *ngIf="form.value.role === 'dueno'">
-      <span>Restaurant Id</span>
-      <input formControlName="restaurantId" type="number" min="1" />
-      <small class="text-muted">Para la demo usar 1 (restaurante precargado)</small>
+      <span>Restaurante</span>
+      <select formControlName="restaurantId">
+        <option *ngFor="let r of restaurants" [ngValue]="r.id">#{{ r.id }} - {{ r.name }}</option>
+      </select>
+      <small class="text-muted">Seleccioná el restaurante del dueño</small>
     </label>
 
     <button class="btn btn-primary" type="submit">Guardar y navegar</button>
+    <div class="text-danger" *ngIf="error">{{ error }}</div>
   </form>
 </section>
