@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
 import { PedidosService } from '../../../core/services/pedidos.service';
 import { RealtimeOrdersService } from '../../../core/services/realtime-orders.service';
@@ -16,6 +16,7 @@ export class Dashboard {
   private readonly pedidos = inject(PedidosService);
   private readonly realtime = inject(RealtimeOrdersService);
   private readonly auth = inject(AuthStore);
+  private readonly router = inject(Router);
 
   orders: any[] = [];
   loading = true;
@@ -62,5 +63,28 @@ export class Dashboard {
 
   deliver(o: any) {
     this.pedidos.deliver(o.id).subscribe({ next: () => this.refresh() });
+  }
+
+  statusText(s: number): string {
+    switch (s) {
+      case 0: return 'Pedido Creado';
+      case 2: return 'Pedido En preparación';
+      case 3: return 'Repartidor Asignado';
+      case 4: return 'En camino';
+      case 5: return 'Entregado';
+      case 6: return 'Rechazado';
+      default: return String(s);
+    }
+  }
+
+  goBack() { history.back(); }
+
+  goHome() {
+    const role = this.auth.currentUser()?.role;
+    if (role === 'cliente') {
+      this.router.navigateByUrl('/');
+    } else {
+      this.router.navigateByUrl('/role');
+    }
   }
 }

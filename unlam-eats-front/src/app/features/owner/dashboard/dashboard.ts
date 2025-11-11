@@ -1,4 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +19,7 @@ export class Dashboard {
   private readonly pedidos = inject(PedidosService);
   private readonly realtime = inject(RealtimeOrdersService);
   private readonly auth = inject(AuthStore);
+  private readonly router = inject(Router);
 
   orders: any[] = [];
   loading = true;
@@ -25,6 +27,7 @@ export class Dashboard {
   private get restaurantId() { return this.auth.currentUser()?.restaurantId ?? 1; }
   couriers: Array<{ id: string; name: string }> = [];
   selected: Record<number, string> = {};
+  rejectNotes: Record<number, string> = {};
 
   constructor() {
     this.refresh();
@@ -77,5 +80,41 @@ export class Dashboard {
       next: () => this.refresh(),
       error: () => alert('No se pudo asignar el repartidor. Verifique que el pedido esté En preparación.')
     });
+  }
+
+  reject(o: any) {
+    const reason = (this.rejectNotes[o.id] || '').trim();
+    if (!reason) { alert('Ingrese un motivo de rechazo'); return; }
+    this.pedidos.reject(o.id, reason).subscribe({
+      next: () => this.refresh(),
+      error: () => alert('No se pudo rechazar el pedido')
+    });
+  }
+
+  statusText(s: number): string {
+    switch (s) {
+      case 0: return 'Pedido Creado';
+      case 2: return 'Pedido En preparación';
+      case 3: return 'Repartidor Asignado';
+      case 4: return 'En camino';
+      case 5: return 'Entregado';
+      case 6: return 'Rechazado';
+      default: return String(s);
+    }
+  }
+
+  goBack() { history.back(); }
+
+  goHome() {
+    const role = this.auth.currentUser()?.role;
+    if (role === 'cliente') {
+      this.router.navigateByUrl('/');
+    } else {
+      this.router.navigateByUrl('/role');
+    }
+  }
+
+  clean() {
+    this.orders = this.orders.filter(o => o.status !== 5 && o.status !== 6);
   }
 }
