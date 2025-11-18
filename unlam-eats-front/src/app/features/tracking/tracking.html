@@ -1,22 +1,27 @@
-<section class="container stack-lg">
-  <h1 style="margin:0">Seguimiento de pedido</h1>
+<section class="mx-auto max-w-6xl px-4 py-4 space-y-4">
+  <h1 class="text-xl font-semibold">Seguimiento de pedido</h1>
 
-  <div *ngIf="error" class="text-danger">{{ error }}</div>
-  <div *ngIf="!error && !order" class="text-muted">Cargando pedido...</div>
+  <div *ngIf="error" class="text-sm text-red-600">{{ error }}</div>
+  <div *ngIf="!error && !order" class="text-sm text-gray-500">Cargando pedido...</div>
 
-  <div *ngIf="order" class="stack">
-    <div class="card" style="padding:12px;">
-      <div><strong>Pedido #{{ order.id }}</strong></div>
+  <div *ngIf="order" class="space-y-3">
+    <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-card space-y-1 text-sm">
+      <div class="font-semibold">Pedido #{{ order.id }}</div>
       <div>Estado: {{ statusText(order.status) }}</div>
       <div>Total: {{ order.total | currency:'ARS':'symbol':'1.0-0' }}</div>
       <div *ngIf="order.assignedCourierId">Repartidor asignado: {{ order.assignedCourierId }}</div>
-      <div *ngIf="order.status===6 && order.rejectionReason" class="text-danger">Motivo rechazo: {{ order.rejectionReason }}</div>
+      <div *ngIf="order.status===6 && order.rejectionReason" class="text-xs text-red-600">
+        Motivo rechazo: {{ order.rejectionReason }}
+      </div>
     </div>
 
-    <div class="card" style="padding:12px;">
-      <strong>Items</strong>
-      <ul>
-        <li *ngFor="let it of order.items">{{ it.nameSnapshot }} x{{ it.quantity }} - {{ it.priceSnapshot | currency:'ARS':'symbol':'1.0-0' }}</li>
+    <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-card text-sm">
+      <strong class="block mb-2">Items</strong>
+      <ul class="space-y-1">
+        <li *ngFor="let it of order.items" class="flex justify-between">
+          <span>{{ it.nameSnapshot }} x{{ it.quantity }}</span>
+          <span>{{ it.priceSnapshot | currency:'ARS':'symbol':'1.0-0' }}</span>
+        </li>
       </ul>
     </div>
   </div>

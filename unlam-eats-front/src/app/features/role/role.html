@@ -1,41 +1,64 @@
-<section class="container stack-lg">
-  <h1 style="margin:0">Seleccionar rol (demo)</h1>
+<section class="mx-auto max-w-6xl px-4 py-4 space-y-4">
+  <h1 class="text-xl font-semibold">Seleccionar rol (demo)</h1>
 
-  <form [formGroup]="form" (ngSubmit)="submit()" class="stack">
-    <label class="stack">
-      <span>Rol</span>
-      <select formControlName="role">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-3 max-w-md">
+    <label class="flex flex-col gap-1 text-sm">
+      <span class="font-medium">Rol</span>
+      <select
+        formControlName="role"
+        class="rounded-lg border border-gray-300 px-2 py-1.5 text-sm"
+      >
         <option value="cliente">Cliente</option>
         <option value="dueno">Dueño</option>
         <option value="repartidor">Repartidor</option>
       </select>
     </label>
 
-    <label class="stack">
-      <span>Nombre</span>
-      <input formControlName="name" placeholder="Nombre visible" />
+    <label class="flex flex-col gap-1 text-sm">
+      <span class="font-medium">Nombre</span>
+      <input
+        formControlName="name"
+        placeholder="Nombre visible"
+        class="rounded-lg border border-gray-300 px-2 py-1.5"
+      />
     </label>
 
-    <label class="stack">
-      <span>ID de usuario</span>
-      <input formControlName="id" placeholder="cliente-1 / dueno-1 / courier-1" />
-      <small class="text-muted">Sugerencias: cliente-1, dueno-1, courier-1</small>
+    <label class="flex flex-col gap-1 text-sm">
+      <span class="font-medium">ID de usuario</span>
+      <input
+        formControlName="id"
+        placeholder="cliente-1 / dueno-1 / courier-1"
+        class="rounded-lg border border-gray-300 px-2 py-1.5"
+      />
+      <small class="text-gray-500">Sugerencias: cliente-1, dueno-1, courier-1</small>
     </label>
 
-    <label class="stack">
-      <span>Email</span>
-      <input formControlName="email" type="email" />
+    <label class="flex flex-col gap-1 text-sm">
+      <span class="font-medium">Email</span>
+      <input
+        formControlName="email"
+        type="email"
+        class="rounded-lg border border-gray-300 px-2 py-1.5"
+      />
     </label>
 
-    <label class="stack" *ngIf="form.value.role === 'dueno'">
-      <span>Restaurante</span>
-      <select formControlName="restaurantId">
+    <label class="flex flex-col gap-1 text-sm" *ngIf="form.value.role === 'dueno'">
+      <span class="font-medium">Restaurante</span>
+      <select
+        formControlName="restaurantId"
+        class="rounded-lg border border-gray-300 px-2 py-1.5 text-sm"
+      >
         <option *ngFor="let r of restaurants" [ngValue]="r.id">#{{ r.id }} - {{ r.name }}</option>
       </select>
-      <small class="text-muted">Seleccioná el restaurante del dueño</small>
+      <small class="text-gray-500">Seleccioná el restaurante del dueño</small>
     </label>
 
-    <button class="btn btn-primary" type="submit">Guardar y navegar</button>
-    <div class="text-danger" *ngIf="error">{{ error }}</div>
+    <button
+      class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-[#00a896] text-white text-sm font-medium transition-transform hover:scale-95 active:scale-90"
+      type="submit"
+    >
+      Guardar y navegar
+    </button>
+    <div class="text-sm text-red-600" *ngIf="error">{{ error }}</div>
   </form>
 </section>

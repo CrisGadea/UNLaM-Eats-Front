@@ -1,52 +1,54 @@
-<header class="container" style="padding: var(--space-4) 0;">
-  <div class="stack" style="gap: var(--space-2);">
-    <h1 style="margin:0; font-size: 24px;">UNLaM Eats</h1>
-    <p class="text-muted" style="margin:0;">Pedí comida de tus restaurantes favoritos</p>
-  </div>
-  <nav style="margin-top: var(--space-3); display:flex; gap: 12px;">
-    <a routerLink="/login" class="btn btn-outline">Ingresar</a>
-    <a routerLink="/register" class="btn btn-primary">Crear cuenta</a>
-    <a routerLink="/payment-history" class="btn btn-outline">💳 Mis Pagos</a>
-  </nav>
-  <div class="spacer"></div>
-  <div class="card stack">
-    <input class="input" type="search" placeholder="Buscar restaurantes o platos..." />
-    <div class="stack" style="gap: var(--space-2);">
-      <small class="text-muted">Categorías populares</small>
-      <div style="display:flex; gap:8px; overflow:auto;">
-        <button class="btn btn-outline">Pizza</button>
-        <button class="btn btn-outline">Sushi</button>
-        <button class="btn btn-outline">Hamburguesas</button>
-        <button class="btn btn-outline">Veggie</button>
+<section class="mx-auto max-w-6xl px-4 py-4">
+  <!-- Hero / búsqueda -->
+  <div class="space-y-3">
+    <h1 class="text-2xl font-semibold tracking-tight">UNLaM Eats</h1>
+    <p class="text-gray-600">Pedí comida de tus restaurantes favoritos</p>
+
+    <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-card">
+      <input
+        class="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-unlam-green-300"
+        type="search"
+        placeholder="Buscar restaurantes o platos..."
+      />
+      <div class="mt-3">
+        <small class="text-gray-500">Categorías populares</small>
+        <div class="mt-2 flex gap-2 overflow-x-auto">
+          <button class="px-3 py-1 rounded-full border border-gray-200 text-sm">Pizza</button>
+          <button class="px-3 py-1 rounded-full border border-gray-200 text-sm">Sushi</button>
+          <button class="px-3 py-1 rounded-full border border-gray-200 text-sm">Hamburguesas</button>
+          <button class="px-3 py-1 rounded-full border border-gray-200 text-sm">Veggie</button>
+        </div>
       </div>
     </div>
   </div>
-</header>
 
-<section class="container stack-lg">
-  <div class="stack">
-    <h2 style="margin:0; font-size: 18px;">Cerca de vos</h2>
+  <!-- CTA auth / pagos -->
+  <div class="mt-4 flex gap-2">
+    <a routerLink="/login" class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-[#00a896] text-[#00a896] transition-transform hover:scale-95 active:scale-90">Ingresar</a>
+    <a routerLink="/register" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#00a896] text-white transition-transform hover:scale-95 active:scale-90">Crear cuenta</a>
+    <a routerLink="/payment-history" class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-gray-200">💳 Mis Pagos</a>
+  </div>
 
-    <div *ngIf="loading" class="text-muted">Cargando restaurantes...</div>
-    <div *ngIf="!loading && error" class="text-danger">{{ error }}</div>
+  <!-- Lista de restaurantes -->
+  <div class="mt-6">
+    <h2 class="text-sm font-medium text-gray-700">Cerca de vos</h2>
 
-    <div *ngIf="!loading && !error" class="home-grid">
-      <article class="card stack" *ngFor="let r of restaurants">
-        <div class="home-thumb"></div>
-        <div class="stack" style="gap:4px;">
-          <strong>{{ r.name }}</strong>
-          <small class="text-muted">{{ r.address }}</small>
+    <div *ngIf="loading" class="mt-2 text-gray-500">Cargando restaurantes...</div>
+    <div *ngIf="!loading && error" class="mt-2 text-red-600">{{ error }}</div>
+
+    <div *ngIf="!loading && !error" class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <article class="bg-white border border-gray-200 rounded-xl p-3 shadow-card flex flex-col gap-2" *ngFor="let r of restaurants">
+        <img 
+          src="/default-restaurant.svg" 
+          alt="Imagen del restaurante {{ r.name }}"
+          class="h-28 w-full rounded-lg object-cover"
+        />
+        <div>
+          <div class="font-semibold">{{ r.name }}</div>
+          <div class="text-sm text-gray-500">{{ r.address }}</div>
         </div>
-        <a [routerLink]="['/restaurantes', r.id]" class="btn btn-primary">Iniciar pedido</a>
+        <a [routerLink]="['/restaurantes', r.id]" class="mt-1 inline-flex items-center justify-center px-3 py-2 rounded-lg bg-[#00a896] text-white transition-transform hover:scale-95 active:scale-90">Iniciar pedido</a>
       </article>
     </div>
   </div>
 </section>
-
-<footer class="container" style="padding: var(--space-6) 0;">
-  <div style="display:flex; gap:12px;">
-    <a routerLink="/login">Ingresar</a>
-    <a routerLink="/register">Crear cuenta</a>
-  </div>
-  
-</footer>

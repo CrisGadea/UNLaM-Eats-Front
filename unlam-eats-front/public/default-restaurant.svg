@@ -1,0 +1,37 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#e5e7eb"/>
+  
+  <!-- Outer circle -->
+  <circle cx="200" cy="200" r="140" fill="none" stroke="#d1d5db" stroke-width="3"/>
+  
+  <!-- Inner green circle -->
+  <circle cx="200" cy="200" r="120" fill="none" stroke="#006b54" stroke-width="8"/>
+  
+  <!-- White background for logo -->
+  <circle cx="200" cy="200" r="110" fill="white"/>
+  
+  <!-- Spiral logo in teal -->
+  <g transform="translate(200, 150)">
+    <path d="M 0,0 Q 15,-15 30,0 Q 15,15 0,0 M 0,0 Q -15,-15 -30,0 Q -15,15 0,0" 
+          fill="none" stroke="#00a896" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="8" fill="#00a896"/>
+    <path d="M 0,8 Q 20,20 40,8 M 0,8 Q -20,20 -40,8" 
+          fill="none" stroke="#00a896" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- UNLaM text -->
+  <text x="200" y="195" font-family="Arial, sans-serif" font-size="20" font-weight="normal" 
+        text-anchor="middle" fill="#1f2937">UNLaM</text>
+  
+  <!-- UNLaM Eats text -->
+  <text x="200" y="230" font-family="Arial, sans-serif" font-size="32" font-weight="bold" 
+        text-anchor="middle" fill="#006b54">UNLaM Eats</text>
+  
+  <!-- Banner -->
+  <g transform="translate(200, 340)">
+    <path d="M -150,0 L -130,-15 L 130,-15 L 150,0 L 130,15 L -130,15 Z" fill="#4b5563"/>
+    <text x="0" y="5" font-family="Arial, sans-serif" font-size="16" font-weight="bold" 
+          text-anchor="middle" fill="white">DEFAULT RESTAURANT IMAGE</text>
+  </g>
+</svg>

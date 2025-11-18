@@ -4,6 +4,7 @@ import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
 import { PedidosService } from '../../core/services/pedidos.service';
 import { RealtimeOrdersService } from '../../core/services/realtime-orders.service';
 import { AuthStore } from '../../core/state/auth-store.service';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-tracking',
@@ -17,6 +18,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
   private readonly realtime = inject(RealtimeOrdersService);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthStore);
+  private readonly toast = inject(ToastService);
 
   order: any = null;
   error = '';
@@ -34,9 +36,36 @@ export class TrackingComponent implements OnInit, OnDestroy {
       const p = this.realtime.statusChanged();
       if (p && p.id === this.orderId) {
         if (this.order) this.order.status = p.status;
-        if (p.status === 5) {
-          alert('Su pedido fue entregado correctamente, que lo disfrute');
+
+        const statusLabel = this.statusText(p.status);
+        let extra = '';
+        switch (p.status) {
+          case 0:
+            extra = 'Tu pedido fue creado correctamente.';
+            break;
+          case 2:
+            extra = 'El restaurante está preparando tu pedido.';
+            break;
+          case 3:
+            extra = 'Se asignó un repartidor a tu pedido.';
+            break;
+          case 4:
+            extra = 'Tu pedido ya está en camino.';
+            break;
+          case 5:
+            extra = 'Su pedido fue entregado correctamente, que lo disfrute.';
+            break;
+          case 6:
+            extra = 'Tu pedido fue rechazado. Podés ver el motivo en el detalle.';
+            break;
+          default:
+            extra = '';
         }
+
+        const message = extra
+          ? `Estado actualizado: ${statusLabel}. ${extra}`
+          : `Estado actualizado: ${statusLabel}.`;
+        this.toast.show(message, 'info');
       }
     });
 

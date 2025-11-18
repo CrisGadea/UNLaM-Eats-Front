@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { PaymentsService } from '../../core/services/payments.service';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-payment-result',
@@ -288,6 +289,7 @@ export class PaymentResultComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly paymentsService = inject(PaymentsService);
+  private readonly toast = inject(ToastService);
 
   status: 'success' | 'pending' | 'failure' | 'unknown' = 'unknown';
   loading = true;
@@ -295,6 +297,7 @@ export class PaymentResultComponent implements OnInit {
   payment: any = null;
   paymentId: number | null = null;
   orderId: number | null = null;
+  private redirected = false;
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -319,6 +322,7 @@ export class PaymentResultComponent implements OnInit {
       } else if (externalRef) {
         this.orderId = parseInt(externalRef, 10);
         this.loading = false;
+        this.maybeRedirectToTracking();
       } else {
         this.loading = false;
       }
@@ -331,6 +335,7 @@ export class PaymentResultComponent implements OnInit {
         this.payment = payment;
         this.orderId = payment.orderId;
         this.loading = false;
+        this.maybeRedirectToTracking();
       },
       error: (err) => {
         console.error('Error loading payment:', err);
@@ -347,6 +352,18 @@ export class PaymentResultComponent implements OnInit {
   retryPayment() {
     if (this.orderId) {
       this.router.navigate(['/checkout']);
+    }
+  }
+
+  private maybeRedirectToTracking() {
+    if (this.redirected) return;
+    if (this.status === 'success' && this.orderId) {
+      this.redirected = true;
+      this.toast.show(
+        `Pago realizado correctamente. Te mostramos el estado de tu pedido #${this.orderId}.`,
+        'success'
+      );
+      this.router.navigate(['/tracking', this.orderId]);
     }
   }
 }
