@@ -1,34 +1,72 @@
-<section class="container stack-lg">
-  <h1 style="margin:0">Panel del dueño</h1>
-
-  <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-    <button class="btn btn-outline" (click)="goBack()">Volver</button>
-    <button class="btn" (click)="goHome()">Home</button>
-    <a routerLink="/role" class="btn btn-outline">Cambiar rol (demo)</a>
+<section class="mx-auto max-w-6xl px-4 py-4 space-y-4">
+  <div class="flex items-center justify-between gap-3 flex-wrap">
+    <h1 class="text-xl font-semibold">Panel del dueño</h1>
+    <div class="flex gap-2 flex-wrap text-sm">
+      <button class="inline-flex items-center px-3 py-1.5 rounded-lg border border-gray-300" (click)="goBack()">
+        Volver
+      </button>
+      <button class="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#00a896] text-white transition-transform hover:scale-95 active:scale-90" (click)="goHome()">
+        Home
+      </button>
+      <a routerLink="/role" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-gray-300">
+        Cambiar rol (demo)
+      </a>
+    </div>
   </div>
 
-  <div class="card" style="padding:12px;">
-    <strong>Pedidos</strong>
-    <div *ngIf="loading" class="text-muted">Cargando...</div>
-    <div *ngIf="!loading && error" class="text-danger">{{ error }}</div>
-    <div *ngIf="!loading && !error">
-      <article class="card" *ngFor="let o of orders" style="padding:12px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
-        <div class="stack">
-          <strong>#{{ o.id }} - Estado: {{ statusText(o.status) }}</strong>
-          <small class="text-muted">Total: {{ o.total | currency:'ARS':'symbol':'1.0-0' }}</small>
-          <small *ngIf="o.status===6 && o.rejectionReason" class="text-danger">Motivo: {{ o.rejectionReason }}</small>
+  <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-card space-y-2">
+    <div class="flex items-center justify-between">
+      <span class="font-medium text-sm">Pedidos</span>
+    </div>
+    <div *ngIf="loading" class="text-sm text-gray-500">Cargando...</div>
+    <div *ngIf="!loading && error" class="text-sm text-red-600">{{ error }}</div>
+    <div *ngIf="!loading && !error" class="space-y-2">
+      <article
+        class="bg-gray-50 border border-gray-200 rounded-xl p-3 flex flex-col gap-2 md:flex-row md:items-center md:justify-between"
+        *ngFor="let o of orders"
+      >
+        <div class="space-y-1 text-sm">
+          <div class="font-semibold">#{{ o.id }} - Estado: {{ statusText(o.status) }}</div>
+          <div class="text-gray-600">Total: {{ o.total | currency:'ARS':'symbol':'1.0-0' }}</div>
+          <div *ngIf="o.status===6 && o.rejectionReason" class="text-xs text-red-600">Motivo: {{ o.rejectionReason }}</div>
         </div>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <button class="btn btn-outline" (click)="accept(o)" [disabled]="o.status>2">Aceptar</button>
-          <label class="stack" *ngIf="couriers.length > 0" style="margin:0;">
-            <small class="text-muted">Repartidor</small>
-            <select [(ngModel)]="selected[o.id]">
+        <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center text-xs md:text-sm">
+          <button
+            class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg border border-gray-300"
+            (click)="accept(o)"
+            [disabled]="o.status>2"
+          >
+            Aceptar
+          </button>
+          <label class="flex flex-col gap-1" *ngIf="couriers.length > 0">
+            <small class="text-gray-500">Repartidor</small>
+            <select
+              [(ngModel)]="selected[o.id]"
+              class="rounded-lg border border-gray-300 px-2 py-1 text-sm"
+            >
               <option *ngFor="let c of couriers" [ngValue]="c.id">{{ c.name }} ({{ c.id }})</option>
             </select>
           </label>
-          <button class="btn btn-primary" (click)="assign(o)" [disabled]="o.status!==2">Asignar</button>
-          <input type="text" placeholder="Motivo rechazo" [(ngModel)]="rejectNotes[o.id]" style="min-width:220px;" />
-          <button class="btn btn-outline" (click)="reject(o)" [disabled]="!(o.status===0 || o.status===2 || o.status===1)">Rechazar</button>
+          <button
+            class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-[#00a896] text-white transition-transform hover:scale-95 active:scale-90 disabled:opacity-60"
+            (click)="assign(o)"
+            [disabled]="o.status!==2"
+          >
+            Asignar
+          </button>
+          <input
+            type="text"
+            placeholder="Motivo rechazo"
+            [(ngModel)]="rejectNotes[o.id]"
+            class="rounded-lg border border-gray-300 px-2 py-1 min-w-[220px]"
+          />
+          <button
+            class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg border border-red-400 text-red-600"
+            (click)="reject(o)"
+            [disabled]="!(o.status===0 || o.status===2 || o.status===1)"
+          >
+            Rechazar
+          </button>
         </div>
       </article>
     </div>
